@@ -13,10 +13,11 @@ ReactDOM.render(
             vertical: "bottom",
             horizontal: "center",
           }}
+          
           preventDuplicate
         >
           <App />
         </SnackbarProvider>
   </React.StrictMode>,
-   document.getElementById('')
+   document.getElementById('root')
 );
