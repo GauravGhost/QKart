@@ -3,12 +3,14 @@ import { Button, CircularProgress, Stack, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import { useHistory, Link } from "react-router-dom";
 import { config } from "../App";
 import Footer from "./Footer";
 import Header from "./Header";
 import "./Register.css";
 
 const Register = () => {
+  const navigate = useHistory();
   const { enqueueSnackbar } = useSnackbar();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -55,6 +57,7 @@ const Register = () => {
         setPassword('');
         setConfirmPassword('')
         enqueueSnackbar("Success", { variant: "success" })
+        navigate.push('/login', {from: 'register'})
         return;
       }
     } catch (err) {
@@ -97,7 +100,7 @@ const Register = () => {
    */
   const validateInput = () => {
     if (!username) {
-      enqueueSnackbar("Username is a required field", { variant: "warning" });
+      enqueueSnackbar("Username is a required field", {autoHideDuration: 3000, variant: "warning" });
       return false;
     }
     if (username.length < 6) {
@@ -107,22 +110,24 @@ const Register = () => {
       return false;
     }
     if (!password) {
-      enqueueSnackbar("Password is a required field", { variant: "warning" });
+      enqueueSnackbar("Password is a required field", {autoHideDuration: 3000, variant: "warning" });
       return false;
     }
     if (password.length < 6) {
       enqueueSnackbar("Password must be at least 6 characters", {
+        autoHideDuration: 3000,
         variant: "warning",
       });
       return false;
     }
     if (password !== confirmPassword) {
-      enqueueSnackbar("Passwords do not match", { variant: "warning" });
+      enqueueSnackbar("Passwords do not match", {autoHideDuration: 3000, variant: "warning" });
       return false;
     }
     return true;
   };
 
+  const hasHiddenAuthButtons = true;
   return (
     <Box
       display="flex"
@@ -130,7 +135,7 @@ const Register = () => {
       justifyContent="space-between"
       minHeight="100vh"
     >
-      <Header hasHiddenAuthButtons />
+      <Header hasHiddenAuthButtons={hasHiddenAuthButtons} />
       <Box className="content">
         <Stack spacing={2} className="form">
           <h2 className="title">Register</h2>
@@ -176,9 +181,9 @@ const Register = () => {
           }
           <p className="secondary-action">
             Already have an account?{" "}
-            <a className="link" href="#">
+            <Link to="/login" style={{textDecoration: 'none'}}>
               Login here
-            </a>
+            </Link>
           </p>
         </Stack>
       </Box>
