@@ -13,7 +13,7 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
 
   const logoutHandler = () => {
     localStorage.clear();
-    setUsername(false);
+    setUsername(false);it 
   }
   const loginRegisterButton = <Box>
     <Button
