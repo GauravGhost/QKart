@@ -47,14 +47,14 @@ import "./Cart.css";
  *    Array of objects with complete data on products in cart
  *
  */
- export const generateCartItemsFrom = (cartData, productsData) => {
+export const generateCartItemsFrom = (cartData, productsData) => {
   if (!cartData) return;
 
   const nextCart = cartData.map((item) => ({
     ...item,
     ...productsData.find((product) => item.productId === product._id),
   }));
- // console.log(nextCart);
+  // console.log(nextCart);
   return nextCart;
 };
 
@@ -140,41 +140,11 @@ const Cart = ({
       </Box>
     );
   }
-  const CartDisplay = ({ item }) => {
-    return <>
-      <Box className="image-container">
-        <img
-          src={item.image}
-          alt={item.name}
-          width="100%"
-          height="100%"
-        />
-      </Box>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="space-between"
-        height="6rem"
-        paddingX="1rem"
-      >
-        <div>{item.name}</div>
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <ItemQuantity
-            value={item.qty}
-            handleAdd={async () => { await handleQuantity(token, item.productId, items, item.qty + 1, { preventDuplicate: true }) }}
-            handleDelete={async () => { await handleQuantity(token, item.productId, items, item.qty - 1, { preventDuplicate: true }) }}
-          />
-          <Box padding="0.5rem" fontWeight="700">
-            ${item.cost}
-          </Box>
-        </Box>
-      </Box>
-    </>
-  }
+  // const CartDisplay = ({ item }) => {
+  //   return <>
+
+  //   </>
+  // }
 
   return (
     <>
@@ -183,7 +153,38 @@ const Cart = ({
         {items.map((item) => {
           return (
             <Box display="flex" alignItems="flex-start" padding="1rem" key={item.productId}>
-              <CartDisplay item={item} />
+              <Box className="image-container">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  width="100%"
+                  height="100%"
+                />
+              </Box>
+              <Box
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-between"
+                height="6rem"
+                paddingX="1rem"
+              >
+                <div>{item.name}</div>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <ItemQuantity
+                    value={item.qty}
+                    handleAdd={async () => { await handleQuantity(token, items, products, item.productId, item.qty + 1, { preventDuplicate: true }) }}
+                    handleDelete={async () => { await handleQuantity(token, items, products, item.productId, item.qty - 1, { preventDuplicate: true }) }}
+
+                  />
+                  <Box padding="0.5rem" fontWeight="700">
+                    ${item.cost}
+                  </Box>
+                </Box>
+              </Box>
             </Box>
           )
         })}

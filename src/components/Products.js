@@ -266,14 +266,14 @@ const Products = () => {
    * }
    */
 
-  const addToCart = async (token, productId, cartItems, qty, options = {preventDuplicate:false}) => {
-    console.log("before operation", cartItems);
+  const addToCart = async (token, items, products, productId, qty, options = {preventDuplicate:false}) => {
+
     if (!token) {
       enqueueSnackbar('Login to add an item to the Cart', { autoHideDuration: 3000, variant: 'warning' })
       return;
     }
-    console.log(qty);
-    if (!options.preventDuplicate && isItemInCart(cartItems, productId)) {
+  
+    if (!options.preventDuplicate && isItemInCart(items, productId)) {
       enqueueSnackbar('Item already in cart. Use the cart sidebar to update quantity or remove item.',
         { autoHideDuration: 3000, variant: 'warning' })
       return;
@@ -292,12 +292,10 @@ const Products = () => {
           }
         }
       );
-      if (response.status === 200) {
-        const items = generateCartItemsFrom(response.data, totalProducts);
-        console.log(response.data)
-        console.log("after operation", items);
+      // if (response.status === 200) {
+        const items = generateCartItemsFrom(response.data, products);
         setCartItems(items);
-      }
+      // }
     } catch (error) {
       enqueueSnackbar('Something Went wrong. Check that the backend is running, reachable and returns valid JSON', {
         variant: 'error'
@@ -376,7 +374,7 @@ const Products = () => {
               isLoading ? loading : noItem ? notFound : products.map((item) => {
                 return (
                   <Grid item xs={6} md={3} key={item._id}>
-                    <ProductCard product={item} handleAddToCart={() => addToCart(token, item._id, cartItems, 1)} />
+                    <ProductCard product={item} handleAddToCart={() => addToCart(token, cartItems, totalProducts, item._id, 1)} />
                   </Grid>
                 )
               })}
