@@ -3,7 +3,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ipConfig from "./ipConfig.json";
 import Products from "./components/Products";
-
+import Checkout from "./components/Checkout"
 export const config = {
   endpoint: `http://${ipConfig.workspaceIp}:8082/api/v1`,
 };
@@ -20,6 +20,9 @@ function App() {
       </Route>
       <Route path="/register">
         <Register />
+      </Route>
+      <Route path="/checkout">
+        <Checkout />
       </Route>
     </Switch>
   );

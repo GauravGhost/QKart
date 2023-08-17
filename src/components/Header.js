@@ -8,12 +8,11 @@ import { Typography } from "@mui/material";
 
 const Header = ({ children, hasHiddenAuthButtons }) => {
   const navigate = useHistory();
-  const name = localStorage.getItem('username');
-  const [username, setUsername] = useState(!!name)
+  const username = localStorage.getItem('username');
 
   const logoutHandler = () => {
     localStorage.clear();
-    setUsername(false);it 
+    window.location.reload();
   }
   const loginRegisterButton = <Box>
     <Button
@@ -42,8 +41,8 @@ const Header = ({ children, hasHiddenAuthButtons }) => {
 
   const avatarLogoutButton = <Stack direction="row" alignItems="center" spacing={2}>
 
-    <img src="avatar.png" alt={name} width='34' />
-    <Typography variant="subtitle1" className='username-text'>{name}</Typography>
+    <img src="avatar.png" alt={username} width='34' />
+    <Typography variant="subtitle1" className='username-text'>{username}</Typography>
     <Button
       className="explore-button"
       variant="text"
